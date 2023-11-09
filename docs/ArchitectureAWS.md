@@ -23,6 +23,8 @@ Costo por mes durante 24 horas:
 * AWS ECR: 0,10 USD - Amount of data stored: 1 GB
 * Amazon IAM: 0 USD
 
+**Total cost: 272,83 USD**
+
 **AWS Pricing Calculator:** https://calculator.aws/#/addService
 
 
