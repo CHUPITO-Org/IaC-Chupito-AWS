@@ -9,7 +9,7 @@ Template for creating terraform module repo.
 
 #### Pre-commit hook
 
-The template utilizes pre-commit hooks to run the linters before committing the code, if you are using starting the template for the first time, you need to enable the pre-commit, after that it will work for all subsecuents commits. To use the To install the pre-commit hooks run the following command:
+The template utilizes [pre-commit](https://pre-commit.com/) hooks to run the linters before committing the code, if you are using starting the template for the first time, you need to enable the pre-commit, after that it will work for all subsecuents commits. To use the To install the pre-commit hooks run the following command:
 
 ```bash
 pre-commit install
