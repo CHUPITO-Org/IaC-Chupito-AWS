@@ -70,12 +70,4 @@ jobs:
           committer_name: GitHub Actions
           committer_email: 41898282+github-actions[bot]@users.noreply.github.com
           add: CHANGELOG.md
-      # - name: Commit file
-      #   uses: yui-Kitamura/commit@2.0.1
-      #   env:
-      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     files: |
-      #       CHANGELOG.md
-      #     commit-message: "docs(CHANGELOG): Update changelog"
-      #     ref: refs/heads/main
+          push: origin main --force.
