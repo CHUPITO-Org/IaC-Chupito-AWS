@@ -4,18 +4,6 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
-# variable "access_key" {
-#   type        = string
-# }
-
-# variable "secret_access_key" {
-#   type        = string
-# }
-
-# variable "session_token" {
-#   type        = string
-# }
-
 variable "public_subnet_cidrs" {
   type        = list(string)
   description = "Public Subnet CIDR values"
