@@ -3,22 +3,22 @@
 ##########--- NAT Gateway ---##########
 
 # Create Elastic IP for the NAT Gateway
-resource "aws_eip" "E_IPs_NATgw_chupito" {
+resource "aws_eip" "elasticip_natgw" {
   #count  = length(var.public_subnet_cidrs)
   vpc = true
 
   tags = {
-    Name = "E-IPs-NATgw-chupito"
+    Name = "chupito"
   }
 }
 
 #Create NAT Gateway resource and attach it to the VPC and public subnet
-resource "aws_nat_gateway" "NAT_gateway_chupito" {
-  allocation_id = aws_eip.E_IPs_NATgw_chupito.id
-  subnet_id     = aws_subnet.public_subnets_chupito[0].id
+resource "aws_nat_gateway" "nat_gateway" {
+  allocation_id = aws_eip.elasticip_natgw.id
+  subnet_id     = aws_subnet.public_subnets[0].id
 
   tags = {
-    Name = "NAT-gateway-chupito"
+    Name = "chupito"
   }
 }
 
@@ -30,15 +30,15 @@ resource "aws_nat_gateway" "NAT_gateway_chupito" {
 #subnet where NAT Gateway is
 resource "aws_route_table" "PrivateSubRT" {
   #count      = length(var.private_subnet_cidrs)
-  vpc_id = aws_vpc.vpc_aws_chupito.id
+  vpc_id = aws_vpc.vpc_aws.id
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_nat_gateway.NAT_gateway_chupito.id
+    gateway_id = aws_nat_gateway.nat_gateway.id
   }
 
   tags = {
-    Name = "PrivateSubRT"
+    Name = "chupito"
   }
 }
 
