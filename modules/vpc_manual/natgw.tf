@@ -48,3 +48,4 @@ resource "aws_route_table_association" "private_subnets_associations" {
   subnet_id      = element(aws_subnet.private_subnets[*].id, count.index)
   route_table_id = aws_route_table.private_subnet_rt.id
 }
+
