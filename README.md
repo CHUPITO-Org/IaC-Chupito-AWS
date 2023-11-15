@@ -27,19 +27,15 @@ After that the pre-commit will check
 - It will check for [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/)
 
 <!-- BEGIN_TF_DOCS -->
-
 ## Requirements
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.6.0 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | 3.0.1 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.0 |
 
 ## Providers
 
-| Name | Version |
-|------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.0.1 |
+No providers.
 
 ## Modules
 
@@ -49,9 +45,7 @@ After that the pre-commit will check
 
 ## Resources
 
-| Name | Type |
-|------|------|
-| [azurerm_resource_group.default_rg](https://registry.terraform.io/providers/hashicorp/azurerm/3.0.1/docs/resources/resource_group) | resource |
+No resources.
 
 ## Inputs
 
@@ -66,5 +60,4 @@ After that the pre-commit will check
 ## Outputs
 
 No outputs.
-
 <!-- END_TF_DOCS -->
