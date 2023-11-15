@@ -28,7 +28,7 @@ resource "aws_nat_gateway" "nat_gateway" {
 #NAT Gateway in all the public subnets, but 
 #without main you only can use it with the 
 #subnet where NAT Gateway is
-resource "aws_route_table" "PrivateSubRT" {
+resource "aws_route_table" "private_subnet_rt" {
   #count      = length(var.private_subnet_cidrs)
   vpc_id = aws_vpc.vpc_aws.id
 
@@ -42,9 +42,9 @@ resource "aws_route_table" "PrivateSubRT" {
   }
 }
 
-# #Private subnets associated to PublicSubRT
-# resource "aws_route_table_association" "private_subnets_associations" {
-#   count          = length(var.private_subnet_cidrs)
-#   subnet_id      = element(aws_subnet.private_subnets_chupito[*].id, count.index)
-#   route_table_id = aws_route_table.PrivateSubRT.id
-# }
+# #Private subnets associated to private_subnet_rt
+resource "aws_route_table_association" "private_subnets_associations" {
+  count          = length(var.private_subnet_cidrs)
+  subnet_id      = element(aws_subnet.private_subnets[*].id, count.index)
+  route_table_id = aws_route_table.private_subnet_rt.id
+}
