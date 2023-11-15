@@ -13,5 +13,4 @@ module "ecr-repo" {
   ecr_name         = var.ecr_name
   image_mutability = var.image_mutability
   encrypt_type     = var.encrypt_type
-  tags             = var.tags
 }

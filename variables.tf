@@ -45,9 +45,3 @@ variable "encrypt_type" {
   type        = string
   default     = "KMS"
 }
-
-variable "tags" {
-  description = "The key-value maps for tagging"
-  type        = map(string)
-  default     = {}
-}
