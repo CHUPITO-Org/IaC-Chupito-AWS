@@ -6,6 +6,6 @@ resource "aws_vpc" "vpc_aws" {
   instance_tenancy     = "default" //It's not dedicated, by default is cheaper than dedicated
 
   tags = {
-    Name = "chupito"
+    Project = "chupito"
   }
 }

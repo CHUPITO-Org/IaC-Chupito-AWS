@@ -4,11 +4,10 @@
 
 # Create Elastic IP for the NAT Gateway
 resource "aws_eip" "elasticip_natgw" {
-  #count  = length(var.public_subnet_cidrs)
   vpc = true
 
   tags = {
-    Name = "chupito"
+    Project = "chupito"
   }
 }
 
@@ -18,7 +17,7 @@ resource "aws_nat_gateway" "nat_gateway" {
   subnet_id     = aws_subnet.public_subnets[0].id
 
   tags = {
-    Name = "chupito"
+    Project = "chupito"
   }
 }
 
@@ -29,7 +28,6 @@ resource "aws_nat_gateway" "nat_gateway" {
 #without main you only can use it with the 
 #subnet where NAT Gateway is
 resource "aws_route_table" "private_subnet_rt" {
-  #count      = length(var.private_subnet_cidrs)
   vpc_id = aws_vpc.vpc_aws.id
 
   route {
@@ -38,7 +36,7 @@ resource "aws_route_table" "private_subnet_rt" {
   }
 
   tags = {
-    Name = "chupito"
+    Project = "chupito"
   }
 }
 

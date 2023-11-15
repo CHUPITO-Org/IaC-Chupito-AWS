@@ -3,7 +3,7 @@ resource "aws_internet_gateway" "igw_aws" {
   vpc_id = aws_vpc.vpc_aws.id
 
   tags = {
-    Name = "chupito"
+    Project = "chupito"
   }
 }
 
@@ -19,7 +19,7 @@ resource "aws_route_table" "public_subnet_rt" {
   }
 
   tags = {
-    Name = "chupito"
+    Project = "chupito"
   }
 }
 

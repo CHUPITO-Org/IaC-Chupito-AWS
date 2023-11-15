@@ -9,7 +9,8 @@ resource "aws_subnet" "public_subnets" {
   map_public_ip_on_launch = true #This is what makes it a public subnet
   #Enable automatic public IP assignment on instance launch!
   tags = {
-    Name = "public-chupito-${count.index + 1}"
+    Project = "chupito"
+    Name    = "public-subnet-${count.index + 1}"
   }
 }
 
@@ -22,7 +23,8 @@ resource "aws_subnet" "private_subnets" {
   map_public_ip_on_launch = false #This is what makes it a private subnet
 
   tags = {
-    Name = "private-chupito-${count.index + 1}"
+    Project = "chupito"
+    Name    = "private-subnet-${count.index + 1}"
   }
 }
 
@@ -35,6 +37,7 @@ resource "aws_subnet" "database_subnets" {
   map_public_ip_on_launch = false #This is what makes it a private subnet
 
   tags = {
-    Name = "db-chupito-${count.index + 1}"
+    Project = "chupito"
+    Name    = "db-subnet-${count.index + 1}"
   }
 }
