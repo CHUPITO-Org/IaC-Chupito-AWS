@@ -8,7 +8,7 @@ module "vpc_aws" {
   azs                   = var.azs
 }
 
-module "ecr-repo" {
+module "container_registry" {
   source           = "./modules/ecr"
   aws_region       = var.aws_region
   ecr_name         = var.ecr_name
@@ -16,7 +16,7 @@ module "ecr-repo" {
   encrypt_type     = var.encrypt_type
 }
 
-module "ecs-fargate" {
+module "ecs_fargate" {
   source              = "./modules/ecs"
   vpc_id              = module.vpc_aws.vpc_id
   public_subnets_ids  = module.vpc_aws.public_subnets_ids
