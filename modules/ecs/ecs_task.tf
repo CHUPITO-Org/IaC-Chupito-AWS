@@ -1,5 +1,5 @@
 resource "aws_ecs_task_definition" "hello_world" {
-  family                   = "hello-world-app"
+  family                   = "chupito-front"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = 1024
@@ -12,15 +12,15 @@ resource "aws_ecs_task_definition" "hello_world" {
   container_definitions = <<DEFINITION
 [
   {
-    "image": "registry.gitlab.com/architect-io/artifacts/nodejs-hello-world:latest",
+    "image": "041581428422.dkr.ecr.us-east-1.amazonaws.com/chupito-front:latest",
     "cpu": 1024,
     "memory": 2048,
-    "name": "hello-world-app",
+    "name": "chupito-front",
     "networkMode": "awsvpc",
     "portMappings": [
       {
-        "containerPort": 3000,
-        "hostPort": 3000
+        "containerPort": 80,
+        "hostPort": 80
       }
     ]
   }
@@ -36,8 +36,10 @@ resource "aws_security_group" "hello_world_task" {
 
   ingress {
     protocol        = "tcp"
-    from_port       = 3000
-    to_port         = 3000
+    #from_port       = 3000
+    #to_port         = 3000
+    from_port       = 80
+    to_port         = 80
     security_groups = [aws_security_group.lb.id]
   }
 
