@@ -31,7 +31,7 @@ Cost per month for 24 hours:
 
 **Total cost: 62,40 USD**
 
-**Check Cost Estimate provided by AWS:** [Excel with costs](https://github.com/CHUPITO-Org/IaC-Chupito-AWS/blob/laura/feat/docs-draft/docs/Costs_Estimate_v2.csv)
+**Check Cost Estimate provided by AWS:** [Excel with costs](https://github.com/CHUPITO-Org/IaC-Chupito-AWS/blob/main/docs/Costs_Estimate_v2.csv)
 
 **AWS Pricing Calculator:** https://calculator.aws/#/addService
 
