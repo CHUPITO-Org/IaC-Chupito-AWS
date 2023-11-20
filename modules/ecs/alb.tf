@@ -22,7 +22,7 @@ resource "aws_security_group" "lb" {
 }
 
 resource "aws_lb" "default" {
-  name            = "alb-chupito"
+  name            = "demo-app"
   subnets         = [var.public_subnets_ids[0], var.public_subnets_ids[1]] #public subnets
   security_groups = [aws_security_group.lb.id]
 
@@ -51,6 +51,9 @@ resource "aws_lb_listener" "alb_listener" {
   default_action {
     target_group_arn = aws_lb_target_group.alb.id
     type             = "forward"
+  }
+  tags = {
+    Project = "chupito"
   }
 }
 

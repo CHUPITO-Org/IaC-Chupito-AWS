@@ -1,5 +1,5 @@
 resource "aws_ecs_task_definition" "front_task" {
-  family                   = "chupito-front"
+  family                   = "frontend-image"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = 1024
@@ -8,10 +8,10 @@ resource "aws_ecs_task_definition" "front_task" {
   container_definitions = <<DEFINITION
 [
   {
-    "image": "041581428422.dkr.ecr.us-east-1.amazonaws.com/chupito-front:latest",
+    "image": "041581428422.dkr.ecr.us-east-1.amazonaws.com/frontend-image:latest",
     "cpu": 1024,
     "memory": 2048,
-    "name": "chupito-front",
+    "name": "frontend-image",
     "networkMode": "awsvpc",
     "portMappings": [
       {
@@ -24,6 +24,10 @@ resource "aws_ecs_task_definition" "front_task" {
 DEFINITION
   #Add when we use an image from ECR
   execution_role_arn = aws_iam_role.ecsTaskExecutionRole.arn
+
+  tags = {
+    Project = "chupito"
+  }
 }
 
 resource "aws_security_group" "sg_task" {
@@ -42,5 +46,9 @@ resource "aws_security_group" "sg_task" {
     from_port   = 0
     to_port     = 0
     cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Project = "chupito"
   }
 }

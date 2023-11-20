@@ -37,7 +37,7 @@ variable "azs" {
 variable "ecr_name" {
   description = "The name of the ECR registry"
   type        = string
-  default     = "chupito-front"
+  default     = "frontend-image"
 }
 variable "image_mutability" {
   description = "Provide image mutability"
