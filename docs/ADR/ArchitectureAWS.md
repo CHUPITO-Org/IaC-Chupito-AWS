@@ -2,7 +2,7 @@
 
 ## Infrastructure
 
-![AWS architecture](architectureAWS.png)
+![AWS architecture](architectureAWS_v1.png)
 
 Region: North Virginia (us-east-1)
 
@@ -26,7 +26,7 @@ Cost per month for 24 hours:
 
 **Total cost: 62,78 USD**
 
-**Check Cost Estimate provided by AWS:** [Excel with costs](https://github.com/CHUPITO-Org/IaC-Chupito-AWS/blob/laura/feat/docs-draft/docs/Costs_Estimate.csv)
+**Check Cost Estimate provided by AWS:** [Excel with costs](https://github.com/CHUPITO-Org/IaC-Chupito-AWS/blob/laura/feat/docs-draft/docs/ADR/Costs_Estimate_v1.csv)
 
 **AWS Pricing Calculator:** https://calculator.aws/#/addService
 
