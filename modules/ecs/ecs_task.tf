@@ -1,14 +1,10 @@
-resource "aws_ecs_task_definition" "hello_world" {
+resource "aws_ecs_task_definition" "front_task" {
   family                   = "chupito-front"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = 1024
   memory                   = 2048
 
-
-  #"image": "${aws_ecr_repository.ecr.repository_url}",
-  #"name": "container-name", "hello-world-react",
-  #"image": "registry.gitlab.com/architect-io/artifacts/nodejs-hello-world:latest",
   container_definitions = <<DEFINITION
 [
   {
@@ -30,14 +26,12 @@ DEFINITION
   execution_role_arn = aws_iam_role.ecsTaskExecutionRole.arn
 }
 
-resource "aws_security_group" "hello_world_task" {
+resource "aws_security_group" "sg_task" {
   name   = "task-security-group"
   vpc_id = var.vpc_id
 
   ingress {
     protocol        = "tcp"
-    #from_port       = 3000
-    #to_port         = 3000
     from_port       = 80
     to_port         = 80
     security_groups = [aws_security_group.lb.id]

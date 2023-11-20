@@ -8,8 +8,6 @@ resource "aws_internet_gateway" "igw_aws" {
 }
 
 #4) Create 2nd Route Table for Public Subnets, 
-#because there is a 1st Route Table (10.0.0.0/16) (default Route Table)
-#for all subnets public, private and db
 resource "aws_route_table" "public_subnet_rt" {
   vpc_id = aws_vpc.vpc_aws.id
 
