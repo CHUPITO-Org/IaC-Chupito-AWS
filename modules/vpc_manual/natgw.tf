@@ -1,7 +1,6 @@
 #6)Create a NAT gateway for private subnets to access the internet
 
 ##########--- NAT Gateway ---##########
-
 # Create Elastic IP for the NAT Gateway
 resource "aws_eip" "elasticip_natgw" {
   vpc = true
@@ -22,11 +21,6 @@ resource "aws_nat_gateway" "nat_gateway" {
 }
 
 ##########--- RT Private Subnets ---##########
-#Create a new Route Table 1 for Private Subnets
-#Set as main route table, because you can use 
-#NAT Gateway in all the public subnets, but 
-#without main you only can use it with the 
-#subnet where NAT Gateway is
 resource "aws_route_table" "private_subnet_rt" {
   vpc_id = aws_vpc.vpc_aws.id
 
