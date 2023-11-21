@@ -21,7 +21,6 @@ jobs:
         id: commit
         run: |
           COMMIT_MSG=$(git log --format=%B -n 1 HEAD| tail -n 1)
-          echo "Merge commit message pepito: $COMMIT_MSG"
           echo "COMMIT_MSG=$COMMIT_MSG" >> $GITHUB_OUTPUT
       - name: Bump version and push tag
         id: tag_version
