@@ -22,3 +22,9 @@ module "ecs_fargate" {
   public_subnets_ids  = module.vpc_aws.public_subnets_ids
   private_subnets_ids = module.vpc_aws.private_subnets_ids
 }
+
+module "document_db" {
+  source         = "./modules/document_db"
+  vpc_id              = module.vpc_aws.vpc_id
+  db_subnets_ids = module.vpc_aws.db_subnets_ids
+}
