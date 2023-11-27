@@ -24,7 +24,8 @@ module "ecs_fargate" {
 }
 
 module "secrets_manager" {
-  source = "./modules/secrets_manager"
+  source              = "./modules/secrets_manager"
+  documentdb_username = var.documentdb_username
 }
 
 module "document_db" {
@@ -32,5 +33,8 @@ module "document_db" {
   vpc_id              = module.vpc_aws.vpc_id
   db_subnets_ids      = module.vpc_aws.db_subnets_ids
   azs                 = var.azs
+  documentdb_username = var.documentdb_username
   documentdb_password = module.secrets_manager.documentdb_root_password
+
+  depends_on = [module.secrets_manager]
 }

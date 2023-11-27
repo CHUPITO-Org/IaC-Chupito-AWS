@@ -12,6 +12,11 @@ variable "azs" {
   type        = list(string)
 }
 
+variable "documentdb_username" {
+  description = "Username for documentDB"
+  type        = string
+}
+
 variable "documentdb_password" {
   description = "Password for documentDB"
   type        = string

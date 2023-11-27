@@ -4,7 +4,7 @@ resource "aws_docdb_cluster" "docdb" {
   engine             = "docdb"
 
   #AUTHENTICATION
-  master_username = "root"
+  master_username = var.documentdb_username
   master_password = var.documentdb_password
 
   #NETWORK SETTINGS

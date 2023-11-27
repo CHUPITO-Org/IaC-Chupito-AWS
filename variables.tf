@@ -44,9 +44,13 @@ variable "image_mutability" {
   type        = string
   default     = "IMMUTABLE"
 }
-
 variable "encrypt_type" {
   description = "Provide type of encryption here"
   type        = string
   default     = "KMS"
+}
+variable "documentdb_username" {
+  description = "Username for documentDB"
+  type        = string
+  default     = "main"
 }
