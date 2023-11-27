@@ -23,8 +23,14 @@ module "ecs_fargate" {
   private_subnets_ids = module.vpc_aws.private_subnets_ids
 }
 
+module "secrets_manager" {
+  source = "./modules/secrets_manager"
+}
+
 module "document_db" {
-  source         = "./modules/document_db"
+  source              = "./modules/document_db"
   vpc_id              = module.vpc_aws.vpc_id
-  db_subnets_ids = module.vpc_aws.db_subnets_ids
+  db_subnets_ids      = module.vpc_aws.db_subnets_ids
+  azs                 = var.azs
+  documentdb_password = module.secrets_manager.documentdb_root_password
 }
