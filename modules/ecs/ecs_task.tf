@@ -25,6 +25,14 @@ DEFINITION
   #Add when we use an image from ECR
   execution_role_arn = aws_iam_role.ecsTaskExecutionRole.arn
 
+  # Environment:
+  #           #as you saw in the code of the frontend app, we need the backendurl environment variable
+  #           #so we can reach our backend
+  #             - Name: backendurl
+  #               Value: !Sub
+  #                   - "http://${lb_url}"
+  #                   - lb_url: !GetAtt internalLoadBalancer.DNSName
+
   tags = {
     Project = "chupito"
   }

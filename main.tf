@@ -21,6 +21,9 @@ module "ecs_fargate" {
   vpc_id              = module.vpc_aws.vpc_id
   public_subnets_ids  = module.vpc_aws.public_subnets_ids
   private_subnets_ids = module.vpc_aws.private_subnets_ids
+  documentdb_username = var.documentdb_username
+  documentdb_password = module.secrets_manager.documentdb_root_password
+  documentdb_endpoint = module.document_db.documentdb_endpoint
 }
 
 module "secrets_manager" {

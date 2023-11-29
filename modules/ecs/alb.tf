@@ -41,6 +41,10 @@ resource "aws_lb_target_group" "alb" {
   tags = {
     Project = "chupito"
   }
+
+  # health_check {
+  #  path = "/frontend"
+  # }
 }
 
 resource "aws_lb_listener" "alb_listener" {

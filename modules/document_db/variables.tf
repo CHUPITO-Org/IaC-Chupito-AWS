@@ -21,3 +21,4 @@ variable "documentdb_password" {
   description = "Password for documentDB"
   type        = string
 }
+
