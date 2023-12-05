@@ -24,6 +24,7 @@ module "ecs_fargate" {
   documentdb_username = var.documentdb_username
   documentdb_password = module.secrets_manager.documentdb_root_password
   documentdb_endpoint = module.document_db.documentdb_endpoint
+  documentdb_name     = module.document_db.documentdb_name
 }
 
 module "secrets_manager" {

@@ -5,7 +5,6 @@ resource "aws_ecs_task_definition" "back_task" {
   cpu                      = 1024
   memory                   = 2048
 
-  #"image": "041581428422.dkr.ecr.us-east-1.amazonaws.com/backend-image:latest",
   container_definitions = <<DEFINITION
 [
   {
@@ -14,10 +13,18 @@ resource "aws_ecs_task_definition" "back_task" {
     "memory": 2048,
     "name": "backend-image",
     "networkMode": "awsvpc",
+    "linuxParameters": {
+	    "initProcessEnabled": true
+    },
+    "enableExecuteCommand": true,
     "environment": [
         {
           "name": "MONGODB_URI",
           "value": "${var.documentdb_endpoint}"
+        },
+        {
+          "name": "MONGO_INITDB_DATABASE",
+          "value": "${var.documentdb_name}"
         },
         {
           "name": "MONGO_INITDB_ROOT_USERNAME",
@@ -30,15 +37,15 @@ resource "aws_ecs_task_definition" "back_task" {
     ],
     "portMappings": [
       {
-        "containerPort": 8080,
-        "hostPort": 8080
+        "containerPort": 5002,
+        "hostPort": 5002
       }
     ]
   }
 ]
 DEFINITION
-  #Add when we use an image from ECR
-  execution_role_arn = aws_iam_role.ecsTaskExecutionRole.arn
+  execution_role_arn    = aws_iam_role.ecsTaskExecutionRole.arn
+  task_role_arn         = aws_iam_role.ecsTaskRole.arn
 
   tags = {
     Project = "chupito"
@@ -51,9 +58,9 @@ resource "aws_security_group" "internal_sg_task" {
 
   ingress {
     protocol        = "tcp"
-    from_port       = 80   #frontend port
-    to_port         = 8080 #backend port
-    security_groups = [aws_security_group.lb.id]
+    from_port       = 5002
+    to_port         = 5002
+    security_groups = [aws_security_group.lb-internal.id]
   }
 
   egress {

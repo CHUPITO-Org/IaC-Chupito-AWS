@@ -13,6 +13,10 @@ resource "aws_ecs_task_definition" "front_task" {
     "memory": 2048,
     "name": "frontend-image",
     "networkMode": "awsvpc",
+    "linuxParameters": {
+	    "initProcessEnabled": true
+    },
+    "enableExecuteCommand": true,
     "portMappings": [
       {
         "containerPort": 80,
@@ -22,17 +26,8 @@ resource "aws_ecs_task_definition" "front_task" {
   }
 ]
 DEFINITION
-  #Add when we use an image from ECR
-  execution_role_arn = aws_iam_role.ecsTaskExecutionRole.arn
-
-  # Environment:
-  #           #as you saw in the code of the frontend app, we need the backendurl environment variable
-  #           #so we can reach our backend
-  #             - Name: backendurl
-  #               Value: !Sub
-  #                   - "http://${lb_url}"
-  #                   - lb_url: !GetAtt internalLoadBalancer.DNSName
-
+  execution_role_arn    = aws_iam_role.ecsTaskExecutionRole.arn
+  task_role_arn         = aws_iam_role.ecsTaskRole.arn
   tags = {
     Project = "chupito"
   }

@@ -19,3 +19,7 @@ variable "documentdb_endpoint" {
   description = "DocumentDB endpoint"
   type        = string
 }
+variable "documentdb_name" {
+  description = "DocumentDB name"
+  type        = string
+}

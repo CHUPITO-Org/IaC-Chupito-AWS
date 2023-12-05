@@ -1,4 +1,3 @@
-
 resource "aws_ecs_service" "backend_app_service" {
   name            = "backend-service"
   cluster         = aws_ecs_cluster.main.id
@@ -8,13 +7,13 @@ resource "aws_ecs_service" "backend_app_service" {
 
   network_configuration {
     security_groups = [aws_security_group.internal_sg_task.id]
-    subnets         = [var.private_subnets_ids[0], var.private_subnets_ids[1]] #private subnets
+    subnets         = [var.private_subnets_ids[0], var.private_subnets_ids[1]]
   }
 
   load_balancer {
     target_group_arn = aws_lb_target_group.internal-alb.id
     container_name   = "backend-image"
-    container_port   = 8080
+    container_port   = 5002
   }
 
   depends_on = [aws_lb_listener.internal_alb_listener]
@@ -23,4 +22,3 @@ resource "aws_ecs_service" "backend_app_service" {
     Project = "chupito"
   }
 }
-
