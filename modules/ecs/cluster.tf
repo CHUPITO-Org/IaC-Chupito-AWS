@@ -15,7 +15,7 @@ resource "aws_ecs_service" "app_service" {
 
   network_configuration {
     security_groups = [aws_security_group.sg_task.id]
-    subnets         = [var.private_subnets_ids[0], var.private_subnets_ids[1]] 
+    subnets         = [var.private_subnets_ids[0], var.private_subnets_ids[1]]
   }
 
   load_balancer {
@@ -30,3 +30,5 @@ resource "aws_ecs_service" "app_service" {
     Project = "chupito"
   }
 }
+
+
