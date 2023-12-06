@@ -1,5 +1,5 @@
 resource "aws_db_subnet_group" "db_subnet_group" {
-  name = "main"
+  name = "main_document_db"
 
   subnet_ids = [
     var.db_subnets_ids[0],
