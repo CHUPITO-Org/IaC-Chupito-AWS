@@ -22,3 +22,9 @@ variable "documentdb_password" {
   type        = string
 }
 
+variable "documentdb_pg_tls" {
+  description = "DocumentDB enable or disable TLS [enabled/disabled]"
+  type        = string
+}
+
+

@@ -1,7 +1,8 @@
 resource "aws_docdb_cluster" "docdb" {
   #CONFIGURATION
-  cluster_identifier = "my-docdb-cluster"
-  engine             = "docdb"
+  cluster_identifier              = "my-docdb-cluster"
+  engine                          = "docdb"
+  db_cluster_parameter_group_name = aws_docdb_cluster_parameter_group.pg_document_db.id
 
   #AUTHENTICATION
   master_username = var.documentdb_username
@@ -52,5 +53,16 @@ resource "aws_security_group" "vpc_documentdb_sg" {
 
   tags = {
     Project = "chupito"
+  }
+}
+
+resource "aws_docdb_cluster_parameter_group" "pg_document_db" {
+  family      = "docdb5.0"
+  name        = "document-db-parameter-group"
+  description = "docdb cluster parameter group"
+
+  parameter {
+    name  = "tls"
+    value = var.documentdb_pg_tls
   }
 }

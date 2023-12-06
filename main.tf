@@ -39,6 +39,7 @@ module "document_db" {
   azs                 = var.azs
   documentdb_username = var.documentdb_username
   documentdb_password = module.secrets_manager.documentdb_root_password
+  documentdb_pg_tls   = var.documentdb_pg_tls
 
   depends_on = [module.secrets_manager]
 }
