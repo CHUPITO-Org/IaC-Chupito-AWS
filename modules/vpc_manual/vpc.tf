@@ -7,5 +7,18 @@ resource "aws_vpc" "vpc_aws" {
 
   tags = {
     Project = "chupito"
+    Name    = "vpc_main"
   }
+}
+
+resource "aws_vpc_dhcp_options" "default" {
+  domain_name_servers = ["AmazonProvidedDNS"]
+  domain_name         = "ec2.internal"
+  ntp_servers         = ["169.254.169.123"] # Amazon provided NTP servers
+}
+
+resource "aws_vpc_dhcp_options_association" "default" {
+  vpc_id          = aws_vpc.vpc_aws.id
+  dhcp_options_id = aws_vpc_dhcp_options.default.id
+
 }

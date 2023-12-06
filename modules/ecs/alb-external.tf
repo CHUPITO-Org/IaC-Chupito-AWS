@@ -23,7 +23,7 @@ resource "aws_security_group" "lb" {
 
 resource "aws_lb" "default" {
   name            = "demo-app"
-  subnets         = [var.public_subnets_ids[0], var.public_subnets_ids[1]] #public subnets
+  subnets         = [var.public_subnets_ids[0], var.public_subnets_ids[1]] 
   security_groups = [aws_security_group.lb.id]
 
   tags = {

@@ -27,7 +27,6 @@ variable "database_subnet_cidrs" {
   default     = ["10.0.4.0/24", "10.0.5.0/24"]
 }
 
-
 variable "azs" {
   type        = list(string)
   description = "Availability Zones"
@@ -54,3 +53,5 @@ variable "documentdb_username" {
   type        = string
   default     = "main"
 }
+
+

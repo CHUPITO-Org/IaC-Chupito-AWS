@@ -13,6 +13,10 @@ resource "aws_ecs_task_definition" "front_task" {
     "memory": 2048,
     "name": "frontend-image",
     "networkMode": "awsvpc",
+    "linuxParameters": {
+	    "initProcessEnabled": true
+    },
+    "enableExecuteCommand": true,
     "portMappings": [
       {
         "containerPort": 80,
@@ -22,32 +26,8 @@ resource "aws_ecs_task_definition" "front_task" {
   }
 ]
 DEFINITION
-  #Add when we use an image from ECR
-  execution_role_arn = aws_iam_role.ecsTaskExecutionRole.arn
-
-  tags = {
-    Project = "chupito"
-  }
-}
-
-resource "aws_security_group" "sg_task" {
-  name   = "task-security-group"
-  vpc_id = var.vpc_id
-
-  ingress {
-    protocol        = "tcp"
-    from_port       = 80
-    to_port         = 80
-    security_groups = [aws_security_group.lb.id]
-  }
-
-  egress {
-    protocol    = "-1"
-    from_port   = 0
-    to_port     = 0
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
+  execution_role_arn    = aws_iam_role.ecsTaskExecutionRole.arn
+  task_role_arn         = aws_iam_role.ecsTaskRole.arn
   tags = {
     Project = "chupito"
   }
