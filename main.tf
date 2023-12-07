@@ -43,3 +43,11 @@ module "document_db" {
 
   depends_on = [module.secrets_manager]
 }
+
+module "bastion_host" {
+  source              = "./modules/bastion"
+  vpc_id              = module.vpc_aws.vpc_id
+  public_subnets_ids  = module.vpc_aws.public_subnets_ids
+  ec2_ami             = var.ec2_ami
+  instance_type       = var.instance_type
+}
