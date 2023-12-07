@@ -59,4 +59,21 @@ variable "documentdb_pg_tls" {
   default     = "disabled"
 }
 
+variable "ec2_ami" {
+  type        = string
+  description = "AMI"
+  default     = "ami-0230bd60aa48260c6"
+}
+
+variable "instance_type" {
+  type        = string
+  description = "instance type"
+  default     = "t2.micro"
+}
+
+variable "bastion_creation" {
+  type        = bool
+  description = "Create Bastion: true or false"
+  default     = false
+}
 
