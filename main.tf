@@ -51,3 +51,4 @@ module "bastion_host" {
   ec2_ami             = var.ec2_ami
   instance_type       = var.instance_type
 }
+
