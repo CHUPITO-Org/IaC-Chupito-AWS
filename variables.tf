@@ -71,4 +71,9 @@ variable "instance_type" {
   default     = "t2.micro"
 }
 
+variable "bastion_creation" {
+  type        = bool
+  description = "Create Bastion: true or false"
+  default     = false
+}
 
