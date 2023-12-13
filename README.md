@@ -6,7 +6,7 @@ First start with a brief explanation of the infrastructure designed for AWS. Nex
 
 # AWS Architecture
 
-![AWS architecture](docs/ADR/architectureAWS_v3.png)
+![AWS architecture](docs/ADR/v3/images/architectureAWS_v3.png)
 
 * AWS VPC: the vpc is deployed with 6 subnets, 2 public subnets, 2 private subnets and 2 private database subnets.
 
@@ -22,7 +22,7 @@ First start with a brief explanation of the infrastructure designed for AWS. Nex
 
 * AWS Secrets Manager: store authentication credentials for the DocumentDB database.
 
-For more details about AWS Architecture click on [here](docs/ADR/ArchitectureAWS_v3.md)
+For more details about AWS Architecture click on [here](https://github.com/CHUPITO-Org/IaC-Chupito-AWS/blob/main/docs/ADR/v3/ArchitectureAWS_v3.md)
 
 # Deploy Chupito on AWS
 
