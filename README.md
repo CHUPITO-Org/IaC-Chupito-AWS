@@ -119,10 +119,10 @@ Upload the images to the container registries:
 
 ```
 [Frontend image]
-docker image push 041581428422.dkr.ecr.us-east-1.amazonaws.com/frontend-image:latest
+docker image push <account_id>.dkr.ecr.us-east-1.amazonaws.com/frontend-image:latest
 
 [Backend image]
-docker image push 041581428422.dkr.ecr.us-east-1.amazonaws.com/backend-image:latest
+docker image push <account_id>.dkr.ecr.us-east-1.amazonaws.com/backend-image:latest
 ```
 
 Check that the application is running by accessing the public load balancer DNS. For example:

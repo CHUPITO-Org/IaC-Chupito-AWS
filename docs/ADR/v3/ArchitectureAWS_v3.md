@@ -2,7 +2,7 @@
 
 ## Infrastructure
 
-![AWS architecture](architectureAWS_v3.png)
+![AWS architecture](images/architectureAWS_v3.png)
 
 Region: North Virginia (us-east-1)
 
@@ -72,7 +72,7 @@ In the database subnets 2 instances of the AWS DocumentDB database are hosted.
 
 This is explained in more detail below.
 
-![AWS VPC](vpc_v3.png)
+![AWS VPC](images/vpc_v3.png)
 
 ## Amazon ECS with Fargate (Compute)
 
@@ -104,7 +104,7 @@ The second load balancer is in charge of distributing the information provided b
 
 The following is the configuration explained above:
 
-![AWS ECS](ecs_v3.png)
+![AWS ECS](images/ecs_v3.png)
 
 ## Amazon DocumentDB (Storage)
 
@@ -116,13 +116,13 @@ AWS DocumentDB is deployed as a non-relational database compatible with MongoDB 
 
 A cluster is created for a regional database with 2 replicas, one replica in each of the availability zones.
 
-![AWS DocumentDB](documentdb_v3.png)
+![AWS DocumentDB](images/documentdb_v3.png)
 
 ## Amazon EC2 (Bastion Host)
 
 The Bastion is a host server that allows secure access to the DocumentDB database externally (MongoDB Compass tool) to the VPC.
 
-![AWS EC2 Bastion Host](bastion_v3.png)
+![AWS EC2 Bastion Host](images/bastion_v3.png)
 
 To connect to MongoDB compass it is important to have the following information (example values):
 
@@ -149,7 +149,7 @@ Private repositories:
 -> frontend-image
 -> backend-image
 ```
-![AWS ECR](ecr_v3.png)
+![AWS ECR](images/ecr_v3.png)
 
 ## Amazon IAM (Policiy)
 
@@ -162,10 +162,10 @@ IAM Roles:
   2. ecsTaskRole
 ```
 
-![AWS IAM](iam_v3.png)
+![AWS IAM](images/iam_v3.png)
 
 ## AWS Secrets Manager (Security)
 
 AWS Secret Manager is used to store authentication credentials for the DocumentDB database.
 
-![AWS Secrets Manager](sm_v3.png)
+![AWS Secrets Manager](images/sm_v3.png)
