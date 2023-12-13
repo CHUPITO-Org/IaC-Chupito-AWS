@@ -1,63 +1,178 @@
-# tf-module-template
+# Chupito Web Application
 
-Template for creating terraform module repo.
+Deployment of the cloud infrastructure on AWS of Chupito, a web application for event manager. 
 
-## Needs
+First start with a brief explanation of the infrastructure designed for AWS. Next, the steps to follow to deploy Chupito in the AWS cloud are explained. Likewise, an Internet Gateway is created to enable internet access to the public subnets and a NAT Gateway is created to enable internet access to the private subnets.
 
-- Download all the linter dependencies
-- Change the URL parameter in .github/workflows/cliff.toml with the repository URL so the commits can be shown on the CHANGELOG.md file
+# AWS Architecture
 
-#### Pre-commit hook
+![AWS architecture](docs/ADR/architectureAWS_v3.png)
 
-The template utilizes [pre-commit](https://pre-commit.com/) hooks to run the linters before committing the code, if you are using starting the template for the first time, you need to enable the pre-commit, after that it will work for all subsecuents commits. To use the To install the pre-commit hooks run the following command:
+* AWS VPC: the vpc is deployed with 6 subnets, 2 public subnets, 2 private subnets and 2 private database subnets.
 
-```bash
-pre-commit install
+* Amazon ECS with Fargate: the frontend and backend are deployed on AWS ECS in a serverless configuration (Fargate) in two availability zones. The ECS configuration communicates constantly with Amazon IAM, Amazon EC2 and Amazon Secrets Manager. ECS communicates with IAM to authorize ECS to pull the frontend and backend images from ECR and send them to ECS. Also, an IAM role is created to be able to access the containers and perform tests. ECS communicates with Secrets Manager to obtain the credentials of the DocumentDB database.
+
+* Amazon DocumentDB (with MongoDB compatibility): non-relational database with 2 instances for each one of the availability zones. 
+
+* Amazon EC2 (Bastion Host): an EC2 instance is created that allows connection to the database externally to the Cloud infrastructure from Compass MongoDB.
+
+* AWS ECR: registry to store frontend and backend docker images.
+
+* Amazon IAM: 2 IAM roles are created that will be used by AWS ECS. 
+
+* AWS Secrets Manager: store authentication credentials for the DocumentDB database.
+
+For more details about AWS Architecture click on [here](docs/ADR/ArchitectureAWS_v3.md)
+
+# Deploy Chupito on AWS
+
+## 1) Pre-requisites
+
+Before deploying the AWS infrastructure, some initial configurations mentioned below are required:
+
+Install terraform and git for MacOS:
+
+```
+brew install git
+brew install terraform
 ```
 
-#### Hook Process
+Request access to Chupito organization in [Terraform Cloud](https://app.terraform.io/app/Chupito/workspaces). Get access to the **IaC-Chupito-AWS** workspace:
 
-After that the pre-commit will check
+![Terraform Cloud Workspaces](images/terraform_cloud_workspaces.png)
 
-- Terraform fmt
-- Terraform tflint
-- Terraform tfsec
-- Terraform validate
-- Terraform docs (if the tf-docs isn't updated the is going to overrite the README.md file)
-- It will check for [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/)
+First, click on the **workspace** IaC-Chupito-AWS. Then click on **Variables**. Then, add AWS environment variables to Workspace variables as sensitive variables:
 
-<!-- BEGIN_TF_DOCS -->
-## Requirements
+![Terraform Cloud AWS credentials](images/tf_ev.png)
 
-| Name | Version |
-|------|---------|
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.0 |
+```
+AWS_ACCESS_KEY_ID=***
+AWS_SECRET_ACCESS_KEY=***
+AWS_SESSION_TOKEN=*** [OPTIONAL]
+```
 
-## Providers
+Download MondoDB Compass here: [MongoDB Compass](https://www.mongodb.com/try/download/compass)
 
-No providers.
+## 2) Deploy AWS infrastructure for Chupito 
 
-## Modules
+As a first step, the IaC-Chupito-AWS repository is downloaded locally:
 
-| Name | Source | Version |
-|------|--------|---------|
-| <a name="module_vpc_aws"></a> [vpc\_aws](#module\_vpc\_aws) | ./modules/vpc_manual | n/a |
+```
+git clone git@github.com:CHUPITO-Org/IaC-Chupito-AWS.git
+```
 
-## Resources
+Now, having the infrastructure locally there are two options to deploy it: 
 
-No resources.
+1. Terraform Cloud: the infrastructure is deployed every time an update is made to the main branch through terraform cloud. To destroy the infrastructure access Terraform Cloud.
 
-## Inputs
+2. Locally: the infrastructure is deployed locally with the following commands:
 
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | Region | `string` | `"us-east-1"` | no |
-| <a name="input_azs"></a> [azs](#input\_azs) | Availability Zones | `list(string)` | <pre>[<br>  "us-east-1a",<br>  "us-east-1b"<br>]</pre> | no |
-| <a name="input_database_subnet_cidrs"></a> [database\_subnet\_cidrs](#input\_database\_subnet\_cidrs) | Private Subnet CIDR values | `list(string)` | <pre>[<br>  "10.0.4.0/24",<br>  "10.0.5.0/24"<br>]</pre> | no |
-| <a name="input_private_subnet_cidrs"></a> [private\_subnet\_cidrs](#input\_private\_subnet\_cidrs) | Private Subnet CIDR values | `list(string)` | <pre>[<br>  "10.0.2.0/24",<br>  "10.0.3.0/24"<br>]</pre> | no |
-| <a name="input_public_subnet_cidrs"></a> [public\_subnet\_cidrs](#input\_public\_subnet\_cidrs) | Public Subnet CIDR values | `list(string)` | <pre>[<br>  "10.0.0.0/24",<br>  "10.0.1.0/24"<br>]</pre> | no |
+```
+terraform init
+terraform validate
+terraform plan
+terraform apply
+```
 
-## Outputs
+To destroy the infrastructure use the command:
 
-No outputs.
-<!-- END_TF_DOCS -->
+```
+terraform destroy
+```
+
+## 3) Upload docker images to AWS ECR
+
+Consider modifying the **REACT_APP_BASE_PATH** frontend variables before building the image and and assign the DNS value of the internal load balancer. For example:
+
+```
+REACT_APP_BASE_PATH=http://internal-demo-app-internal-252650492.us-east-1.elb.amazonaws.com/v1/
+```
+
+Consider modifying the following backend variables before building the image:
+
+
+```
+DB_ROOT_USERNAME=main
+DB_ROOT_PASSWORD=h0JZPZMzz9otyCuF
+MONGODB_URI='mongodb://main:<insertYourPassword>@my-docdb-cluster.cluster-caoqwp4u3ero.us-east-1.docdb.amazonaws.com:27017/?replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false'
+DEFAULT_DB='mongodb'
+```
+
+With the variables mentioned above, build the two images and tag them as follows:
+
+```
+[Frontend image]
+docker image tag ms-conference-ui:latest 041581428422.dkr.ecr.us-east-1.amazonaws.com/frontend-image:latest
+
+[Backend image]
+docker image tag ms-conference-bff:latest 041581428422.dkr.ecr.us-east-1.amazonaws.com/backend-image:latest
+```
+
+Authenticate with AWS ECR:
+
+
+```
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 041581428422.dkr.ecr.us-east-1.amazonaws.com
+```
+
+Upload the images to the container registries:
+
+```
+[Frontend image]
+docker image push 041581428422.dkr.ecr.us-east-1.amazonaws.com/frontend-image:latest
+
+[Backend image]
+docker image push 041581428422.dkr.ecr.us-east-1.amazonaws.com/backend-image:latest
+```
+
+Check that the application is running by accessing the public load balancer DNS. For example:
+
+```
+http://demo-app-1446936410.us-east-1.elb.amazonaws.com
+```
+
+## 4) Access to AWS DocumentDB with Bastion Host
+
+Open Compass MongoDB, create a new connection and copy the following URI:
+
+```
+mongodb://main:<insertYourPassword>@my-docdb-cluster.cluster-caoqwp4u3ero.us-east-1.docdb.amazonaws.com:27017/?replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false
+```
+
+Open **Advanced Connection Options**, click on **Proxy/SSH** -> **SSH with Identity File**. Add bastion host credentials, upload **bastion-key.pem** and connect:
+
+```
+SSH Hostname: ec2-54-209-48-167.compute-1.amazonaws.com [example value]
+SSH Port: 22
+SSH Username: ec2-user
+```
+
+![Compass MongoDB](images/compass_connection.png)
+
+Now, the database collections can be created.
+
+NOTE: the Bastion Host is designed to be deployed and destroyed when necessary without affecting the infrastructure already created. Modify the following variable:
+
+```
+variable "bastion_creation" {
+  type        = bool
+  description = "Create Bastion: true or false"
+  default     = false
+}
+```
+
+# Test
+
+To access the frontend and backend containers use the following commands:
+
+```
+[FRONTEND]
+aws ecs update-service --cluster cluster-app --service frontend-service --region us-east-1 --enable-execute-command --force-new-deployment
+
+aws ecs execute-command --cluster cluster-app --task <task-id> --container frontend-image --command "/bin/sh" --interactive
+
+[BACKEND]
+aws ecs update-service --cluster cluster-app --service backend-service --region us-east-1 --enable-execute-command --force-new-deployment
+
+aws ecs execute-command --cluster cluster-app --task <task-id> --container backend-image --command "/bin/sh" --interactive
+```
