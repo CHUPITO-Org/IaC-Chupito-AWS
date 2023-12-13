@@ -23,12 +23,18 @@ resource "aws_security_group" "lb-internal" {
 
 resource "aws_lb" "internal-default" {
   name            = "demo-app-internal"
-  internal        = true
-  subnets         = [var.private_subnets_ids[0], var.private_subnets_ids[1]]
+  internal        = false
+  subnets         = [var.public_subnets_ids[0], var.public_subnets_ids[1]]
   security_groups = [aws_security_group.lb-internal.id]
 
   tags = {
     Project = "chupito"
+  }
+
+  access_logs {
+    bucket  = aws_s3_bucket.alb_logs.id
+    prefix  = "logs-alb-internal"
+    enabled = true
   }
 }
 # [PORTS UNDER REVISION]
