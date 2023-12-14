@@ -74,6 +74,6 @@ variable "instance_type" {
 variable "bastion_creation" {
   type        = bool
   description = "Create Bastion: true or false"
-  default     = false
+  default     = true
 }
 

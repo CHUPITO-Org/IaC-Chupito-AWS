@@ -44,7 +44,7 @@ data "aws_iam_policy_document" "s3_bucket_lb_write" {
   }
 }
 
-#CloudWatch Dashboard
+#CloudWatch Dashboard - Metrics: https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-cloudwatch-metrics.html
 resource "aws_cloudwatch_dashboard" "main" {
   dashboard_name = "my-dashboard"
 
@@ -59,10 +59,49 @@ resource "aws_cloudwatch_dashboard" "main" {
 
         properties = {
           metrics = [
-            [
-              "AWS/ApplicationELB",
-              "HTTPCode_ELB_3XX_Count"
-            ]
+            ["AWS/ApplicationELB", "ActiveConnectionCount", "LoadBalancer", "${aws_lb.internal-default.arn_suffix}"],
+            ["AWS/ApplicationELB", "ActiveConnectionCount", "LoadBalancer", "${aws_lb.default.arn_suffix}"],
+          ]
+          period = 60
+          stat   = "Sum"
+          region = "us-east-1"
+          title  = "ActiveConnectionCount"
+
+          # load_balancer_arn = "arn:aws:elasticloadbalancing:us-east-1:041581428422:loadbalancer/app/demo-app-internal/ec3a53c36c713049"
+          # load_balancer_arn = "demo-app-720345429.us-east-1.elb.amazonaws.com"
+          #Total number of concurrent TCP connections active from clients to the load balancer and from the load balancer to targets
+        }
+      },
+      {
+        type   = "metric"
+        x      = 0
+        y      = 0
+        width  = 12
+        height = 6
+
+        properties = {
+          metrics = [
+            ["AWS/ApplicationELB", "ConsumedLCUs", "LoadBalancer", "${aws_lb.internal-default.arn_suffix}"],
+            ["AWS/ApplicationELB", "ConsumedLCUs", "LoadBalancer", "${aws_lb.default.arn_suffix}"],
+          ]
+          period = 60
+          stat   = "Average"
+          region = "us-east-1"
+          title  = "ConsumedLCUs"
+          #Number of load balancer capacity units (LCU) used by your load balancer
+        }
+      },
+      {
+        type   = "metric"
+        x      = 0
+        y      = 0
+        width  = 12
+        height = 6
+
+        properties = {
+          metrics = [
+            ["AWS/ApplicationELB", "HTTPCode_ELB_3XX_Count", "LoadBalancer", "${aws_lb.internal-default.arn_suffix}"],
+            ["AWS/ApplicationELB", "HTTPCode_ELB_3XX_Count", "LoadBalancer", "${aws_lb.default.arn_suffix}"],
           ]
           period = 60
           stat   = "Sum"
@@ -80,10 +119,8 @@ resource "aws_cloudwatch_dashboard" "main" {
 
         properties = {
           metrics = [
-            [
-              "AWS/ApplicationELB",
-              "HTTPCode_ELB_4XX_Count"
-            ]
+            ["AWS/ApplicationELB", "HTTPCode_ELB_4XX_Count", "LoadBalancer", "${aws_lb.internal-default.arn_suffix}"],
+            ["AWS/ApplicationELB", "HTTPCode_ELB_4XX_Count", "LoadBalancer", "${aws_lb.default.arn_suffix}"],
           ]
           period = 60
           stat   = "Sum"
@@ -101,10 +138,8 @@ resource "aws_cloudwatch_dashboard" "main" {
 
         properties = {
           metrics = [
-            [
-              "AWS/ApplicationELB",
-              "HTTPCode_ELB_5XX_Count"
-            ]
+            ["AWS/ApplicationELB", "HTTPCode_ELB_5XX_Count", "LoadBalancer", "${aws_lb.internal-default.arn_suffix}"],
+            ["AWS/ApplicationELB", "HTTPCode_ELB_5XX_Count", "LoadBalancer", "${aws_lb.default.arn_suffix}"],
           ]
           period = 60
           stat   = "Sum"
@@ -122,10 +157,8 @@ resource "aws_cloudwatch_dashboard" "main" {
 
         properties = {
           metrics = [
-            [
-              "AWS/ApplicationELB",
-              "HTTPCode_ELB_500_Count"
-            ]
+            ["AWS/ApplicationELB", "HTTPCode_ELB_500_Count", "LoadBalancer", "${aws_lb.internal-default.arn_suffix}"],
+            ["AWS/ApplicationELB", "HTTPCode_ELB_500_Count", "LoadBalancer", "${aws_lb.default.arn_suffix}"],
           ]
           period = 60
           stat   = "Sum"
@@ -143,10 +176,8 @@ resource "aws_cloudwatch_dashboard" "main" {
 
         properties = {
           metrics = [
-            [
-              "AWS/ApplicationELB",
-              "HTTPCode_ELB_502_Count"
-            ]
+            ["AWS/ApplicationELB", "HTTPCode_ELB_502_Count", "LoadBalancer", "${aws_lb.internal-default.arn_suffix}"],
+            ["AWS/ApplicationELB", "HTTPCode_ELB_502_Count", "LoadBalancer", "${aws_lb.default.arn_suffix}"],
           ]
           period = 60
           stat   = "Sum"
@@ -185,15 +216,32 @@ resource "aws_cloudwatch_dashboard" "main" {
 
         properties = {
           metrics = [
-            [
-              "AWS/ApplicationELB",
-              "HTTPCode_ELB_504_Count"
-            ]
+            ["AWS/ApplicationELB", "HTTPCode_ELB_504_Count", "LoadBalancer", "${aws_lb.internal-default.arn_suffix}"],
+            ["AWS/ApplicationELB", "HTTPCode_ELB_504_Count", "LoadBalancer", "${aws_lb.default.arn_suffix}"],
           ]
           period = 60
           stat   = "Sum"
           region = "us-east-1"
           title  = "HTTPCode_ELB_504_Count"
+          #Nnumber of HTTP 504 error codes that originate from the load balancer
+        }
+      },
+      {
+        type   = "metric"
+        x      = 0
+        y      = 0
+        width  = 12
+        height = 6
+
+        properties = {
+          metrics = [
+            ["AWS/ApplicationELB", "RequestCount", "LoadBalancer", "${aws_lb.internal-default.arn_suffix}"],
+            ["AWS/ApplicationELB", "RequestCount", "LoadBalancer", "${aws_lb.default.arn_suffix}"],
+          ]
+          period = 60
+          stat   = "Sum"
+          region = "us-east-1"
+          title  = "RequestCount"
           #Nnumber of HTTP 504 error codes that originate from the load balancer
         }
       }
