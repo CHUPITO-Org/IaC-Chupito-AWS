@@ -2,15 +2,15 @@ resource "aws_ecs_task_definition" "back_task" {
   family                   = "backend-image"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
-  cpu                      = 1024
-  memory                   = 2048
+  cpu                      = 256
+  memory                   = 1024
 
   container_definitions = <<DEFINITION
 [
   {
     "image": "212240878876.dkr.ecr.us-east-1.amazonaws.com/backend-image:latest",
-    "cpu": 1024,
-    "memory": 2048,
+    "cpu": 256,
+    "memory": 1024,
     "name": "backend-image",
     "networkMode": "awsvpc",
     "linuxParameters": {

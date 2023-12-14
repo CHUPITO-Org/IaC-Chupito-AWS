@@ -2,15 +2,15 @@ resource "aws_ecs_task_definition" "front_task" {
   family                   = "frontend-image"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
-  cpu                      = 1024
-  memory                   = 2048
+  cpu                      = 256
+  memory                   = 1024
 
   container_definitions = <<DEFINITION
 [
   {
     "image": "212240878876.dkr.ecr.us-east-1.amazonaws.com/frontend-image:latest",
-    "cpu": 1024,
-    "memory": 2048,
+    "cpu": 256,
+    "memory": 1024,
     "name": "frontend-image",
     "networkMode": "awsvpc",
     "linuxParameters": {
