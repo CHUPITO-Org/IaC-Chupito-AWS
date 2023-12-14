@@ -23,3 +23,5 @@ variable "documentdb_name" {
   description = "DocumentDB name"
   type        = string
 }
+
+
