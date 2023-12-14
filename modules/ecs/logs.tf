@@ -46,7 +46,7 @@ data "aws_iam_policy_document" "s3_bucket_lb_write" {
 
 #CloudWatch Dashboard - Metrics: https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-cloudwatch-metrics.html
 resource "aws_cloudwatch_dashboard" "main" {
-  dashboard_name = "my-dashboard"
+  dashboard_name = "alb-dashboard"
 
   dashboard_body = jsonencode({
     widgets = [
