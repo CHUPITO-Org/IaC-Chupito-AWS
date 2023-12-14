@@ -8,7 +8,7 @@ resource "aws_ecs_task_definition" "back_task" {
   container_definitions = <<DEFINITION
 [
   {
-    "image": "041581428422.dkr.ecr.us-east-1.amazonaws.com/backend-image:latest",
+    "image": "212240878876.dkr.ecr.us-east-1.amazonaws.com/backend-image:latest",
     "cpu": 1024,
     "memory": 2048,
     "name": "backend-image",

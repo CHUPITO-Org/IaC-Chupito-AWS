@@ -29,6 +29,12 @@ resource "aws_lb" "default" {
   tags = {
     Project = "chupito"
   }
+
+  access_logs {
+    bucket  = aws_s3_bucket.alb_logs.id
+    prefix  = "logs-alb-external"
+    enabled = true
+  }
 }
 
 resource "aws_lb_target_group" "alb" {
