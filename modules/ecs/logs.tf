@@ -3,7 +3,7 @@ data "aws_elb_service_account" "main" {}
 data "aws_caller_identity" "current" {}
 
 resource "aws_s3_bucket" "alb_logs" {
-  bucket        = "logs-lb-463645474637454790"
+  bucket        = "logs-lb-767856544342126"
   force_destroy = true
 }
 
@@ -66,10 +66,26 @@ resource "aws_cloudwatch_dashboard" "main" {
           stat   = "Sum"
           region = "us-east-1"
           title  = "ActiveConnectionCount"
-
-          # load_balancer_arn = "arn:aws:elasticloadbalancing:us-east-1:041581428422:loadbalancer/app/demo-app-internal/ec3a53c36c713049"
-          # load_balancer_arn = "demo-app-720345429.us-east-1.elb.amazonaws.com"
           #Total number of concurrent TCP connections active from clients to the load balancer and from the load balancer to targets
+        }
+      },
+      {
+        type   = "metric"
+        x      = 0
+        y      = 0
+        width  = 12
+        height = 6
+
+        properties = {
+          metrics = [
+            ["AWS/ApplicationELB", "ClientTLSNegotiationErrorCount", "LoadBalancer", "${aws_lb.internal-default.arn_suffix}"],
+            ["AWS/ApplicationELB", "ClientTLSNegotiationErrorCount", "LoadBalancer", "${aws_lb.default.arn_suffix}"],
+          ]
+          period = 60
+          stat   = "Sum"
+          region = "us-east-1"
+          title  = "ClientTLSNegotiationErrorCount"
+          #Number of TLS connections initiated by the client that did not establish a session with the load balancer due to a TLS error
         }
       },
       {
@@ -89,6 +105,63 @@ resource "aws_cloudwatch_dashboard" "main" {
           region = "us-east-1"
           title  = "ConsumedLCUs"
           #Number of load balancer capacity units (LCU) used by your load balancer
+        }
+      },
+      {
+        type   = "metric"
+        x      = 0
+        y      = 0
+        width  = 12
+        height = 6
+
+        properties = {
+          metrics = [
+            ["AWS/ApplicationELB", "DroppedInvalidHeaderRequestCount", "LoadBalancer", "${aws_lb.internal-default.arn_suffix}"],
+            ["AWS/ApplicationELB", "DroppedInvalidHeaderRequestCount", "LoadBalancer", "${aws_lb.default.arn_suffix}"],
+          ]
+          period = 60
+          stat   = "Sum"
+          region = "us-east-1"
+          title  = "DroppedInvalidHeaderRequestCount"
+          #Number of requests where the load balancer removed HTTP headers with header fields that are not valid before routing the request
+        }
+      },
+      {
+        type   = "metric"
+        x      = 0
+        y      = 0
+        width  = 12
+        height = 6
+
+        properties = {
+          metrics = [
+            ["AWS/ApplicationELB", "ForwardedInvalidHeaderRequestCount", "LoadBalancer", "${aws_lb.internal-default.arn_suffix}"],
+            ["AWS/ApplicationELB", "ForwardedInvalidHeaderRequestCount", "LoadBalancer", "${aws_lb.default.arn_suffix}"],
+          ]
+          period = 60
+          stat   = "Sum"
+          region = "us-east-1"
+          title  = "ForwardedInvalidHeaderRequestCount"
+          #Number of requests where the load balancer removed HTTP headers with header fields that are not valid before routing the request
+        }
+      },
+      {
+        type   = "metric"
+        x      = 0
+        y      = 0
+        width  = 12
+        height = 6
+
+        properties = {
+          metrics = [
+            ["AWS/ApplicationELB", "HTTP_Redirect_Url_Limit_Exceeded_Count", "LoadBalancer", "${aws_lb.internal-default.arn_suffix}"],
+            ["AWS/ApplicationELB", "HTTP_Redirect_Url_Limit_Exceeded_Count", "LoadBalancer", "${aws_lb.default.arn_suffix}"],
+          ]
+          period = 60
+          stat   = "Sum"
+          region = "us-east-1"
+          title  = "HTTP_Redirect_Url_Limit_Exceeded_Count"
+          #Number of redirect actions that couldn't be completed because the URL in the response location header is larger than 8K
         }
       },
       {
@@ -224,6 +297,44 @@ resource "aws_cloudwatch_dashboard" "main" {
           region = "us-east-1"
           title  = "HTTPCode_ELB_504_Count"
           #Nnumber of HTTP 504 error codes that originate from the load balancer
+        }
+      },
+      {
+        type   = "metric"
+        x      = 0
+        y      = 0
+        width  = 12
+        height = 6
+
+        properties = {
+          metrics = [
+            ["AWS/ApplicationELB", "NewConnectionCount", "LoadBalancer", "${aws_lb.internal-default.arn_suffix}"],
+            ["AWS/ApplicationELB", "NewConnectionCount", "LoadBalancer", "${aws_lb.default.arn_suffix}"],
+          ]
+          period = 60
+          stat   = "Sum"
+          region = "us-east-1"
+          title  = "NewConnectionCount"
+          #Total number of new TCP connections established from clients to the load balancer and from the load balancer to targets
+        }
+      },
+      {
+        type   = "metric"
+        x      = 0
+        y      = 0
+        width  = 12
+        height = 6
+
+        properties = {
+          metrics = [
+            ["AWS/ApplicationELB", "NonStickyRequestCount", "LoadBalancer", "${aws_lb.internal-default.arn_suffix}"],
+            ["AWS/ApplicationELB", "NonStickyRequestCount", "LoadBalancer", "${aws_lb.default.arn_suffix}"],
+          ]
+          period = 60
+          stat   = "Sum"
+          region = "us-east-1"
+          title  = "NonStickyRequestCount"
+          #Total number of new TCP connections established from clients to the load balancer and from the load balancer to targets
         }
       },
       {

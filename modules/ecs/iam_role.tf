@@ -39,13 +39,13 @@ data "aws_iam_policy_document" "assume_role_policy_ecsTaskRole" {
     condition {
       test     = "StringEquals"
       variable = "aws:SourceAccount"
-      values   = ["041581428422"]
+      values   = ["212240878876"]
     }
 
     condition {
       test     = "ArnLike"
       variable = "aws:SourceArn"
-      values   = ["arn:aws:ecs:us-east-1:041581428422:*"]
+      values   = ["arn:aws:ecs:us-east-1:212240878876:*"]
     }
   }
 }
