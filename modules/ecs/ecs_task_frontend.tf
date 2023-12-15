@@ -8,7 +8,7 @@ resource "aws_ecs_task_definition" "front_task" {
   container_definitions = <<DEFINITION
 [
   {
-    "image": "212240878876.dkr.ecr.us-east-1.amazonaws.com/frontend-image:latest",
+    "image": "${var.account_id}.dkr.ecr.us-east-1.amazonaws.com/frontend-image:latest",
     "cpu": 256,
     "memory": 1024,
     "name": "frontend-image",
@@ -29,6 +29,6 @@ DEFINITION
   execution_role_arn    = aws_iam_role.ecsTaskExecutionRole.arn
   task_role_arn         = aws_iam_role.ecsTaskRole.arn
   tags = {
-    Project = "chupito"
+    Project = var.tag_project_name
   }
 }

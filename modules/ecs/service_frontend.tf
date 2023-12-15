@@ -19,7 +19,7 @@ resource "aws_ecs_service" "frontend_service" {
   depends_on = [aws_lb_listener.alb_listener]
 
   tags = {
-    Project = "chupito"
+    Project = var.tag_project_name
   }
 }
 
@@ -42,7 +42,7 @@ resource "aws_security_group" "sg_task" {
   }
 
   tags = {
-    Project = "chupito"
+    Project = var.tag_project_name
   }
 }
 

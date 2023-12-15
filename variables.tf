@@ -6,6 +6,7 @@ variable "aws_region" {
 
 variable "vpc_cidr_block" {
   type    = string
+  description = "VPC CIDR block"
   default = "10.0.0.0/16"
 }
 
@@ -77,3 +78,8 @@ variable "bastion_creation" {
   default     = true
 }
 
+variable "tag_project_name" {
+  type        = string
+  description = "Tag project name"
+  default     = "chupito"
+}

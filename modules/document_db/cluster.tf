@@ -11,7 +11,7 @@ resource "aws_docdb_cluster" "docdb" {
   #NETWORK SETTINGS
   db_subnet_group_name   = aws_db_subnet_group.db_subnet_group.name
   vpc_security_group_ids = [aws_security_group.vpc_documentdb_sg.id]
-  availability_zones     = ["us-east-1a", "us-east-1b"]
+  availability_zones     = [var.azs[0], var.azs[1]]
 
   #CLUSTER OPTIONS
   port = 27017
@@ -25,7 +25,7 @@ resource "aws_docdb_cluster" "docdb" {
 
   #TAGS
   tags = {
-    Project = "chupito"
+    Project = var.tag_project_name
   }
 
   #DELETION PROTECTION
@@ -52,7 +52,7 @@ resource "aws_security_group" "vpc_documentdb_sg" {
   }
 
   tags = {
-    Project = "chupito"
+    Project = var.tag_project_name
   }
 }
 

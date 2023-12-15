@@ -3,7 +3,7 @@ resource "aws_secretsmanager_secret" "document-credentials" {
   description = "Root user credentials for documentDB"
 
   tags = {
-    Project = "chupito"
+    Project = var.tag_project_name
   }
 }
 

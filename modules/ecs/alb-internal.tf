@@ -17,7 +17,7 @@ resource "aws_security_group" "lb-internal" {
   }
 
   tags = {
-    Project = "chupito"
+    Project = var.tag_project_name
   }
 }
 
@@ -28,7 +28,7 @@ resource "aws_lb" "internal-default" {
   security_groups = [aws_security_group.lb-internal.id]
 
   tags = {
-    Project = "chupito"
+    Project = var.tag_project_name
   }
 
   access_logs {
@@ -46,7 +46,7 @@ resource "aws_lb_target_group" "internal-alb" {
   target_type = "ip"
 
   tags = {
-    Project = "chupito"
+    Project = var.tag_project_name
   }
 
   health_check {
@@ -70,7 +70,7 @@ resource "aws_lb_listener" "internal_alb_listener" {
     type             = "forward"
   }
   tags = {
-    Project = "chupito"
+    Project = var.tag_project_name
   }
 }
 

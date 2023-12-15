@@ -24,6 +24,8 @@ First start with a brief explanation of the infrastructure designed for AWS. Nex
 
 For more details about AWS Architecture click on [here](https://github.com/CHUPITO-Org/IaC-Chupito-AWS/blob/main/docs/ADR/v3/ArchitectureAWS_v3.md)
 
+Demo [video](https://mckinsey.ent.box.com/file/1390282328886). Ask for access to **Digital junior capabilities - Spanish LATAM**
+
 # Deploy Chupito on AWS
 
 ## 1) Pre-requisites

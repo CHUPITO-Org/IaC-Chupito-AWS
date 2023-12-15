@@ -6,7 +6,7 @@ resource "aws_vpc" "vpc_aws" {
   instance_tenancy     = "default" //It's not dedicated, by default is cheaper than dedicated
 
   tags = {
-    Project = "chupito"
+    Project = var.tag_project_name
     Name    = "vpc_main"
   }
 }
@@ -20,5 +20,4 @@ resource "aws_vpc_dhcp_options" "default" {
 resource "aws_vpc_dhcp_options_association" "default" {
   vpc_id          = aws_vpc.vpc_aws.id
   dhcp_options_id = aws_vpc_dhcp_options.default.id
-
 }
