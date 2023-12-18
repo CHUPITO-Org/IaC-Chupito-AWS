@@ -104,17 +104,17 @@ With the variables mentioned above, build the two images and tag them as follows
 
 ```
 [Frontend image]
-docker image tag ms-conference-ui:latest 041581428422.dkr.ecr.us-east-1.amazonaws.com/frontend-image:latest
+docker image tag ms-conference-ui:latest <account_id>..dkr.ecr.us-east-1.amazonaws.com/frontend-image:latest
 
 [Backend image]
-docker image tag ms-conference-bff:latest 041581428422.dkr.ecr.us-east-1.amazonaws.com/backend-image:latest
+docker image tag ms-conference-bff:latest <account_id>..dkr.ecr.us-east-1.amazonaws.com/backend-image:latest
 ```
 
 Authenticate with AWS ECR:
 
 
 ```
-aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 041581428422.dkr.ecr.us-east-1.amazonaws.com
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <account_id>..dkr.ecr.us-east-1.amazonaws.com
 ```
 
 Upload the images to the container registries:
