@@ -5,9 +5,9 @@ variable "aws_region" {
 }
 
 variable "vpc_cidr_block" {
-  type    = string
+  type        = string
   description = "VPC CIDR block"
-  default = "10.0.0.0/16"
+  default     = "10.0.0.0/16"
 }
 
 variable "public_subnet_cidrs" {
@@ -83,3 +83,4 @@ variable "tag_project_name" {
   description = "Tag project name"
   default     = "chupito"
 }
+
