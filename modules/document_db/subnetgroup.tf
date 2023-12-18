@@ -8,6 +8,6 @@ resource "aws_db_subnet_group" "db_subnet_group" {
 
   tags = {
     Name    = "My DB subnet group"
-    Project = "chupito"
+    Project = var.tag_project_name
   }
 }

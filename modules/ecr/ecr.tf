@@ -12,7 +12,7 @@ resource "aws_ecr_repository" "ecr_backend" {
     scan_on_push = true
   }
   tags = {
-    Project = "chupito"
+    Project = var.tag_project_name
   }
 }
 
@@ -31,7 +31,7 @@ resource "aws_ecr_repository" "ecr" {
     scan_on_push = true
   }
   tags = {
-    Project = "chupito"
+    Project = var.tag_project_name
   }
 }
 

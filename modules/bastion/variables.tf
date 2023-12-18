@@ -17,3 +17,8 @@ variable "instance_type" {
   type        = string
   description = "instance type"
 }
+
+variable "tag_project_name" {
+  type        = string
+  description = "Tag project name"
+}

@@ -6,6 +6,7 @@ module "vpc_aws" {
   private_subnet_cidrs  = var.private_subnet_cidrs
   database_subnet_cidrs = var.database_subnet_cidrs
   azs                   = var.azs
+  tag_project_name      = var.tag_project_name
 }
 
 module "container_registry" {
@@ -14,6 +15,7 @@ module "container_registry" {
   ecr_name         = var.ecr_name
   image_mutability = var.image_mutability
   encrypt_type     = var.encrypt_type
+  tag_project_name = var.tag_project_name
 }
 
 module "ecs_fargate" {
@@ -25,11 +27,14 @@ module "ecs_fargate" {
   documentdb_password = module.secrets_manager.documentdb_root_password
   documentdb_endpoint = module.document_db.documentdb_endpoint
   documentdb_name     = module.document_db.documentdb_name
+  account_id          = data.aws_caller_identity.current.id
+  tag_project_name    = var.tag_project_name
 }
 
 module "secrets_manager" {
   source              = "./modules/secrets_manager"
   documentdb_username = var.documentdb_username
+  tag_project_name    = var.tag_project_name
 }
 
 module "document_db" {
@@ -40,6 +45,7 @@ module "document_db" {
   documentdb_username = var.documentdb_username
   documentdb_password = module.secrets_manager.documentdb_root_password
   documentdb_pg_tls   = var.documentdb_pg_tls
+  tag_project_name    = var.tag_project_name
 
   depends_on = [module.secrets_manager]
 }
@@ -50,6 +56,7 @@ module "bastion_host" {
   public_subnets_ids = module.vpc_aws.public_subnets_ids
   ec2_ami            = var.ec2_ami
   instance_type      = var.instance_type
+  tag_project_name   = var.tag_project_name
   count              = var.bastion_creation ? 1 : 0
 }
 

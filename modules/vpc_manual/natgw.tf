@@ -6,7 +6,7 @@ resource "aws_eip" "elasticip_natgw" {
   vpc = true
 
   tags = {
-    Project = "chupito"
+    Project = var.tag_project_name
   }
 }
 
@@ -16,7 +16,7 @@ resource "aws_nat_gateway" "nat_gateway" {
   subnet_id     = aws_subnet.public_subnets[0].id
 
   tags = {
-    Project = "chupito"
+    Project = var.tag_project_name
   }
 }
 
@@ -30,7 +30,7 @@ resource "aws_route_table" "private_subnet_rt" {
   }
 
   tags = {
-    Project = "chupito"
+    Project = var.tag_project_name
   }
 }
 

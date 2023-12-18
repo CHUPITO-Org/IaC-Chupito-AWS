@@ -8,7 +8,7 @@ resource "aws_ecs_task_definition" "back_task" {
   container_definitions = <<DEFINITION
 [
   {
-    "image": "212240878876.dkr.ecr.us-east-1.amazonaws.com/backend-image:latest",
+    "image": "${var.account_id}.dkr.ecr.us-east-1.amazonaws.com/backend-image:latest",
     "cpu": 256,
     "memory": 1024,
     "name": "backend-image",
@@ -17,24 +17,6 @@ resource "aws_ecs_task_definition" "back_task" {
 	    "initProcessEnabled": true
     },
     "enableExecuteCommand": true,
-    "environment": [
-        {
-          "name": "MONGODB_URI",
-          "value": "${var.documentdb_endpoint}"
-        },
-        {
-          "name": "MONGO_INITDB_DATABASE",
-          "value": "${var.documentdb_name}"
-        },
-        {
-          "name": "MONGO_INITDB_ROOT_USERNAME",
-          "value": "${var.documentdb_username}"
-        },
-        {
-          "name": "MONGO_INITDB_ROOT_PASSWORD",
-          "value": "${var.documentdb_password}"
-        }
-    ],
     "portMappings": [
       {
         "containerPort": 5002,
@@ -48,6 +30,6 @@ DEFINITION
   task_role_arn         = aws_iam_role.ecsTaskRole.arn
 
   tags = {
-    Project = "chupito"
+    Project = var.tag_project_name
   }
 }

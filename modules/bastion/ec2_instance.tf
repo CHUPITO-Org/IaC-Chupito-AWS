@@ -1,4 +1,4 @@
-resource "aws_instance" "redhat_server" {
+resource "aws_instance" "bastion_host" {
   ami                         = var.ec2_ami
   instance_type               = var.instance_type
   subnet_id                   = var.public_subnets_ids[0]
@@ -7,7 +7,8 @@ resource "aws_instance" "redhat_server" {
   key_name                    = aws_key_pair.key_pair.key_name
 
   tags = {
-    Project = "chupito"
+    Project = var.tag_project_name
+    Name    = "bastion_host"
   }
 }
 
@@ -17,11 +18,11 @@ resource "aws_eip" "redhat-eip" {
   vpc = true
   tags = {
     Name    = "eip_bastion"
-    Project = "chupito"
+    Project = var.tag_project_name
   }
 }
 # Associate Elastic IP to the EC2 instance  
 resource "aws_eip_association" "redhat-eip-association" {
-  instance_id   = aws_instance.redhat_server.id
+  instance_id   = aws_instance.bastion_host.id
   allocation_id = aws_eip.redhat-eip.id
 }

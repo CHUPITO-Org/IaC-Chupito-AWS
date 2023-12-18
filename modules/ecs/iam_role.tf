@@ -22,7 +22,7 @@ resource "aws_iam_role_policy_attachment" "ecsTaskExecutionRole_policy" {
 
 #ECSTaskRole
 resource "aws_iam_role" "ecsTaskRole" {
-  name               = "ecsTaskRole-test"
+  name               = "ecsTaskRole"
   assume_role_policy = data.aws_iam_policy_document.assume_role_policy_ecsTaskRole.json
 }
 

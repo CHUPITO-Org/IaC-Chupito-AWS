@@ -1,4 +1,5 @@
 variable "vpc_id" {
+  description = "VPC CIDR block"
   type = string
 }
 
@@ -25,6 +26,11 @@ variable "documentdb_password" {
 variable "documentdb_pg_tls" {
   description = "DocumentDB enable or disable TLS [enabled/disabled]"
   type        = string
+}
+
+variable "tag_project_name" {
+  type        = string
+  description = "Tag project name"
 }
 
 

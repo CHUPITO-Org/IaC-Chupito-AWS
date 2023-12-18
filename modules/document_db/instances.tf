@@ -5,6 +5,6 @@ resource "aws_docdb_cluster_instance" "cluster_instances" {
   instance_class     = "db.t3.medium"
 
   tags = {
-    Project = "chupito"
+    Project = var.tag_project_name
   }
 }

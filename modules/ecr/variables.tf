@@ -1,12 +1,20 @@
 variable "ecr_name" {
-  description = "Container Registry Name"
+  description = "The name of the ECR registry"
+  type        = string
 }
 variable "image_mutability" {
-  description = "Image Mutability"
+  description = "Provide image mutability"
+  type        = string
 }
 variable "encrypt_type" {
-  description = "Type of encryption"
+  description = "Provide type of encryption here"
+  type        = string
 }
 variable "aws_region" {
-  description = "AWS Region"
+  type        = string
+  description = "Region"
+}
+variable "tag_project_name" {
+  type        = string
+  description = "Tag project name"
 }
